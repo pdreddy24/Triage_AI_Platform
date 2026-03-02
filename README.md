@@ -85,17 +85,25 @@ Historical behavior metrics
 
 ## ⚙️ Tech Stack
 
-| Layer             | Technology                     |
-|------------------|--------------------------------|
-| API              | FastAPI                       |
-| Machine Learning | PyTorch, Scikit-learn         |
-| Graph Processing | Custom GNN Pipeline           |
-| Monitoring       | Prometheus                    |
-| Containerization | Docker                        |
-| Data Storage     | Parquet                       |
-| Testing          | Pytest                        |
-| Frontend         | Streamlit (Demo UI)           |
+## ⚙️ Tech Stack
 
+| Layer / Domain            | Tools & Technologies Used |
+|---------------------------|---------------------------|
+| API Framework             | FastAPI, Uvicorn |
+| Machine Learning          | PyTorch (GNN), Scikit-learn (GBT), NumPy, Pandas |
+| Graph Processing          | Custom Graph Neural Network Pipeline |
+| Feature Engineering       | Custom Feature Store, Velocity Store |
+| Model Training Pipelines  | Custom Training Pipelines (GBT, GNN, Calibration) |
+| Model Monitoring          | Drift Detection, Performance Metrics Tracking |
+| Observability             | Prometheus |
+| Data Storage              | Parquet, SQLite (`fraud.db`) |
+| Containerization          | Docker, Docker Compose |
+| Testing                   | Pytest, Locust (Load Testing) |
+| Frontend / Demo UI        | Streamlit |
+| Configuration Management  | Pydantic Settings |
+| Authentication            | Token-based API Authentication |
+| Orchestration / Agents    | Custom Agent Framework (Scoring Agent, Drift Agent, Policy Agent, Graph Agent) |
+| Version Control           | Git, GitHub |
 ---
 
 ## 🚀 Running the Project
