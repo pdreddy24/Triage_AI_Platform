@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  fraud-api:
+    build: .
+    container_name: fraud-api
+    ports:
+      - "8000:8000"
+    networks:
+      - fraud-net
+
+networks:
+  fraud-net:
+    external: true

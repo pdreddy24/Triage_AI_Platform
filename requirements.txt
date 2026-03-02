@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pydantic
+sqlalchemy
+psycopg2-binary
+redis
+celery
+prometheus-client
+prometheus-fastapi-instrumentator
+python-dotenv

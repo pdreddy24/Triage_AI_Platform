@@ -1,0 +1,7 @@
+{
+  "run_id": "20260224_192909",
+  "gbt_model_path": "C:\\Users\\deeks\\Downloads\\fraud_AI_triage\\Fraud\\services\\Training_service\\artifacts\\gbt/gbt_20260224_192909.pkl",
+  "metrics": {
+    "auc": 0.9054373823215103
+  }
+}

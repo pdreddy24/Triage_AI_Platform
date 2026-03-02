@@ -1,0 +1,27 @@
+groups:
+  - name: fraud-api-alerts
+    rules:
+
+      - alert: HighLatencyP95
+        expr: histogram_quantile(0.95, rate(score_endpoint_latency_seconds_bucket[1m])) > 0.5
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Fraud API p95 latency above 500ms"
+
+      - alert: HighErrorRate
+        expr: rate(score_errors_total[1m]) > 0.05
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate detected"
+
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "One of the services is down"
