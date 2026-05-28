@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+httpx
+pandas
+python-multipart
+prometheus-fastapi-instrumentator
+prometheus-client

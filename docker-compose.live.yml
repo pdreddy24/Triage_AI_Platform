@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+  scoring-service:
+    build:
+      context: .
+      dockerfile: services/scoring_service/Dockerfile
+    ports:
+      - "8001:8001"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  graph-service:
+    build:
+      context: .
+      dockerfile: services/graph_service/Dockerfile
+    ports:
+      - "8002:8002"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8002/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  triage-agent:
+    build:
+      context: .
+      dockerfile: services/triage_agent/Dockerfile
+    ports:
+      - "8003:8003"
+    environment:
+      SCORING_URL: http://scoring-service:8001/score
+      GRAPH_URL: http://graph-service:8002/analyze
+      REQUEST_TIMEOUT_SECONDS: 10
+    depends_on:
+      scoring-service:
+        condition: service_healthy
+      graph-service:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8003/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ui:
+    build:
+      context: .
+      dockerfile: ui/Dockerfile
+    ports:
+      - "8501:8501"
+    environment:
+      TRIAGE_API_URL: http://triage-agent:8003/triage
+      REQUEST_TIMEOUT_SECONDS: 20
+    depends_on:
+      triage-agent:
+        condition: service_healthy
+    restart: unless-stopped
