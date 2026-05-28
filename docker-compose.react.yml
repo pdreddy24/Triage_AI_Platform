@@ -1,0 +1,39 @@
+services:
+  scoring-service:
+    build:
+      context: .
+      dockerfile: services/scoring_service/Dockerfile
+    ports:
+      - "8001:8001"
+
+  graph-service:
+    build:
+      context: .
+      dockerfile: services/graph_service/Dockerfile
+    ports:
+      - "8002:8002"
+
+  triage-agent:
+    build:
+      context: .
+      dockerfile: services/triage_agent/Dockerfile
+    ports:
+      - "8003:8003"
+    environment:
+      SCORING_URL: http://scoring-service:8001/score
+      GRAPH_URL: http://graph-service:8002/analyze
+    depends_on:
+      - scoring-service
+      - graph-service
+
+  react-ui:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "3000:8080"
+    environment:
+      PORT: 8080
+      TRIAGE_API_URL: http://localhost:8003/triage
+    depends_on:
+      - triage-agent

@@ -1,0 +1,1 @@
+window.__ENV = { TRIAGE_API_URL: "http://localhost:8003/triage" };
